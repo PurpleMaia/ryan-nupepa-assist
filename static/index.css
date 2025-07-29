@@ -1,0 +1,113 @@
+.hollowText {
+    -webkit-text-stroke: 1px black;
+    color: #ffffff00;
+}
+
+.gradientText {
+    background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+body {
+    line-height: 1.6;
+    color: var(--color-neutral);
+    background-color: var(--color-background);
+}
+
+header {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 100;
+    padding: 20px 40px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border-bottom: 3px solid var(--color-primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 24px;
+    color: var(--color-secondary);
+}
+
+nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: var(--color-neutral);
+    font-weight: 500;
+}
+
+nav a:hover {
+    color: var(--color-secondary);
+}
+
+.hero {
+    height: 100vh;
+    background: linear-gradient(rgba(20, 40, 30, 0.7), rgba(20, 40, 30, 0.7)), url('../static/images/cover.jpg') no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    color: white;
+    padding: 0 20px;
+    background-color: var(--color-dark);
+    line-height: 1.2
+}
+
+.hero h2 {
+    /* font-size: 48px; */
+    font-size: 80px;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+}
+
+.hero h3 {
+    font-size: 24px;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+}
+
+.button {
+    background: var(--color-primary);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 18px;
+    text-decoration: none;
+    transition: 0.3s;
+    margin-top: 20px;
+}
+
+.button:hover {
+    background: var(--color-secondary);
+}
+
+section {
+    padding: 60px 40px;
+    max-width: 1000px;
+    margin: 20px auto;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+section h3 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+}
+
+section p {
+    font-size: 18px;
+}
+
+footer {
+    padding: 30px;
+    text-align: center;
+    background: var(--color-light);
+    color: var(--color-neutral);
+}

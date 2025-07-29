@@ -1,0 +1,18 @@
+/* This is the stylesheet that is common among  ALL pages. It contains basic colors and fonts plus basic sizing stuff. */
+
+:root {
+    --color-primary: #2ECC71;
+    --color-secondary: #27AE60;
+    --color-accent: #58D68D;
+    --color-dark: #145A32;
+    --color-light: #E9F7EF;
+    --color-neutral: #555555;
+    --color-background: #FAFAFA;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
