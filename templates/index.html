@@ -17,10 +17,13 @@
         </nav>
     </header>
 
-    <div class="hero">
-        <h2>Hawaiian Research. <br>Accelerated.</h2>
-        <h3>Multilingual. Multimodal. Multitasking.</h3>
-        <a href="/app" class="button">Try it now</a>
+    <div class="xray-wrapper" id="xray-wrapper">
+        <div class="hero">
+            <h2>Hawaiian Research. <br>Accelerated.</h2>
+            <h3>Multilingual. Multimodal. Multitasking.</h3>
+            <a href="/app" class="button">Try it now</a>
+        </div>
+        <img src="../static/images/cover-xray.png" class="xray-image" id="xray-image">
     </div>
 
     <section id="about">
@@ -42,4 +45,19 @@
         &#169; 2025 KumuComputer. All rights reserved.
     </footer>
 </body>
+<script>
+// Update mouse position to make effect work.   
+document.addEventListener("mousemove", (e) => {
+    const xray = document.getElementById("xray-image");
+    const rectangle = document.getElementById("xray-wrapper").getBoundingClientRect();
+
+    // Calcualate the relative position of the cursor
+    const x = ((e.clientX - rectangle.left) / rectangle.width) * 100;
+    const y = ((e.clientY - rectangle.top) / rectangle.height) * 100;
+
+    // Set the position of the xray
+    xray.style.setProperty("--x", `${x}%`);
+    xray.style.setProperty("--y", `${y}%`);
+});
+</script>
 </html>
