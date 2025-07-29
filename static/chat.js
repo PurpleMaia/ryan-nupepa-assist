@@ -4,7 +4,20 @@ async function sendMessage() {
     const userInput = document.getElementById("userInput");
     const chatBox = document.getElementById("chatBox");
     const message = userInput.value.trim();
+    const sendIcon = document.getElementById("sendIcon");
+    const waitIcon = document.getElementById("waitIcon");
+    const sendButton = document.getElementById("sendButton");
+
+    const temperature = document.getElementById("temperature").value;
+    const max_tokens = document.getElementById("maxTokens").value;
+    const model = document.getElementById("llmModel").value;
     if (!message) return;
+
+    sendButton.style.cursor = "wait";
+    sendButton.style.pointerEvents = "none";
+    sendButton.style.background = "var(--color-neutral)";
+    sendIcon.style.display = "none";
+    waitIcon.style.display = "inline-block";
 
     // Add user message to UI and conversation array
     appendMessage("user", message);
@@ -17,7 +30,7 @@ async function sendMessage() {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ messages: conversation })
+            body: JSON.stringify({messages: conversation, model, temperature, max_tokens})
         });
 
         const data = await response.json();
@@ -28,6 +41,13 @@ async function sendMessage() {
     } catch (error) {
         appendMessage("bot", "Error reaching server");
     }
+    
+
+    sendButton.style.cursor = "pointer";
+    sendButton.style.pointerEvents = "auto";
+    sendButton.style.background = "var(--color-primary)";
+    document.getElementById("sendIcon").style.display = "inline-block";
+    document.getElementById("waitIcon").style.display = "none";
 }
 
 
@@ -45,6 +65,7 @@ function appendMessage(sender, text) {
 
 function clearChat() {
     document.getElementById("chatBox").innerHTML = "";
+    appendMessage("bot", "Hi! How can I help you today?");
 }
 
 
@@ -79,10 +100,11 @@ function addFile() {
 // !! BEGIN CHATGPT GENERATED FUNCTIONS
 function toggleSettings() {
     const panel = document.getElementById("settingsPanel");
-    panel.style.display = panel.style.display === "none" ? "block" : "none";
-  }
-
-  document.getElementById("temperature")?.addEventListener("input", function () {
-    document.getElementById("tempValue").innerText = this.value;
-});
+    panel.style.display = panel.style.display === "none" ? "flex" : "none";
+}
+  
+function exportPDF() {
+    const doc = new jsPDF();
+    doc.save("conversation.pdf");
+}
 // !! END CHATGPT GENERATED FUNCTIONS

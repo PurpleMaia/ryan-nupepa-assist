@@ -14,6 +14,14 @@
     
     <!-- DOMPurify to santize user inputs. -->
     <script type="text/javascript" src="/static/purify.min.js"></script>
+
+    <!-- jsPDF for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Roboto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -22,40 +30,12 @@
         <h2>Kumu<a class="gradientText">Computer</a></h2>
         <button onclick="clearChat()">New Chat</button>
         <button onclick="addFile()">Add File</button>
-        <div class="llm-settings">
-            <button onclick="toggleSettings()">LLM Settings</button>
-            <div id="settingsPanel" style="display: none;">
-                <label>
-                    Model:
-                    <select id="llmModel">
-                        <option disabled>== Normal Models ==</option>
-                        <option value="gpt-4.1">gpt-4.1</option>
-                        <option value="gpt-4.1-mini">gpt-4.1-mini</option>
-                        <option value="gpt-4.1">gpt-4.1-nano</option>
-                        <option disabled>== Reasoning Models ==</option> 
-                        <option value="o3">o3</option>
-                        <option value="o3-pro">o3-pro</option>
-                        <option value="o4-mini">o4-mini</option> 
-                    </select>
-                </label>
-                <label>
-                    Temperature:
-                    <span id="tempValue"><b>0.7</b></span>
-                    <input type="range" id="temperature" min="0" max="1" step="0.1" value="0.7" />
-                </label>
-
-                <label><br>
-                    Max Tokens:
-                    <input type="number" id="maxTokens" min="10" max="32768" value="4096" />
-                </label>
-            </div>
-        </div>
+        <button onclick="toggleSettings()">LLM Settings</button>
+        <button onclick="exportPDF()">Export Chat as PDF</button>
         To do:
         <ol class="todo">
-            <li>Fix settings</li>
-            <li>Add option to export to PDF for easy review</li>
+            <li>Fix pdf</li>
             <li>Proper file browsing system</li>
-            <li>"Hotswappable vector stores" for easy file management</li>
             <li>Add option to add multiple files at once</li>
         </ol>
     </div>
@@ -68,7 +48,10 @@
         </div>
         <div class="chat-input">
             <textarea id="userInput" rows="2" placeholder="Send a message..."></textarea>
-            <button onclick="sendMessage()">Send</button>
+            <button id="sendButton" onclick="sendMessage()">
+                <img id="sendIcon" src="../static/images/send.svg" width="20px" style="-webkit-filter: invert(100%)">
+                <img id="waitIcon" src="../static/images/wait.svg" width="20px" style="-webkit-filter: invert(100%); display: none">
+            </button>
         </div>
     </div>
     
@@ -93,6 +76,34 @@
 
         <button class="roundbutton" onclick="toggleSettings()"><b>X</b> Return to chat</button>
     </div>
+
+    <div id="settingsPanel" style="display: none;">
+        <h2>LLM Settings</h2>
+        <label>
+            Model:
+            <select id="llmModel">
+                <option disabled>== Normal Models ==</option>
+                <option value="gpt-4.1">gpt-4.1</option>
+                <option value="gpt-4.1-mini">gpt-4.1-mini</option>
+                <option value="gpt-4.1">gpt-4.1-nano</option>
+                <option disabled>== Reasoning Models ==</option> 
+                <option value="o3">o3</option>
+                <option value="o3-pro">o3-pro</option>
+                <option value="o4-mini">o4-mini</option> 
+            </select>
+        </label>
+        <label>
+            Temperature:
+            <input type="number" id="temperature" min="0" max="2" value="0.7" />
+        </label>
+
+        <label>
+            Max Tokens:
+            <input type="number" id="maxTokens" min="10" max="32768" value="4096" />
+        </label>
+        <button class="button" onclick="toggleSettings()">Save Settings</button>
+    </div>
+
     <!-- MAIN SCRIPT -->
     <script src="../static/chat.js"></script>
 </body>

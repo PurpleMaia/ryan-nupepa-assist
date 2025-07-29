@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Roboto', sans-serif;
     background: var(--color-light);
     display: flex;
     height: 100vh;
@@ -10,30 +10,6 @@ body {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-}
-.llm-settings {
-    display: flex;
-    flex-direction: column;
-    margin: 0px;
-    gap: 20px;
-}
-.llm-settings label {
-    font-size: 14px;
-    color: black;
-}
-
-.llm-settings select {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    background: transparent;
-}
-
-.llm-settings input[type="number"] {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
 }
 
 .sidebar {
@@ -129,11 +105,11 @@ body {
 
 .chat-message.user {
     text-align: right;
-    background: var(--color-light)
 }
 
 .chat-message.bot {
     text-align: left;
+    background: var(--color-light)
 }
 
 .chat-message.bot code {
@@ -202,4 +178,31 @@ body {
     position: absolute;
     top: 20px;
     right: 20px;
+}
+
+#settingsPanel {
+    position: fixed;
+    flex-direction: column;
+    top: 20%;
+    left: 20%;
+    background-color: white;
+    border: 3px solid var(--color-primary);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    gap: 10px;
+}
+
+#settingsPanel input[type="number"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background: transparent;
+}
+
+#settingsPanel select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background: transparent;
 }

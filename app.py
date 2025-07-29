@@ -24,21 +24,28 @@ def about():
 def chat():
     messages = request.json.get("messages", []) 
     model = request.json.get("model", "gpt-4.1-mini")
-    temperature = request.json.get("temperature", 0.7)
-    max_tokens = request.json.get("max_tokens", 4096)
+    temperature = float(request.json.get("temperature", 0.7))
+    max_tokens = int(request.json.get("max_tokens", 4096))
 
-    response = client.responses.create(
-        model=model,
-        temperature=temperature,
-        max_output_tokens=max_tokens,
-        tools=[{
+    response_parameters = {
+        "model": model,
+        "max_output_tokens": max_tokens,
+        "tools": [{
             "type": "file_search",
             "vector_store_ids": ["vs_6875a8264e04819181f92591e60c1054"],
             "max_num_results": 20
         }],
-        input=messages,
-        instructions="You are KumuComputer, a helpful assistant that helps the user to research parts of Hawaiian History. Utilize relevant files to craft a response that satisfies the user's request."
-    )
+        "input": messages,
+        "instructions": "You are KumuComputer, a helpful assistant that helps the user to research parts of Hawaiian History. Utilize relevant files to craft a response that satisfies the user's request. IMPORTANT: Be sure to ALWAYS cite the file you pull information from at then end of your message."
+    }
+
+    # Temperature is not supported for these models and must be omitted.
+    no_temperature_models = {"o3", "o3-pro", "o4-mini"}
+    if model not in no_temperature_models:
+        response_parameters["temperature"] = temperature
+
+    response = client.responses.create(**response_parameters)
+
     reply = response.output_text
     print(response)
     return jsonify({'reply': reply})
