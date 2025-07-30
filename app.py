@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, flash, redirect
 from openai import OpenAI
 import os
 
@@ -6,21 +6,25 @@ import os
 app = Flask(__name__)
 
 # Initialize OpenAI Client. Store your key in an environment variable called OPENAI_API_KEY
-OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 # Render the homepage (url/)
-@app.route('/')
+@app.route("/")
 def home():
-    return render_template('index.html')
+    return render_template("index.html")
 
 # Render the actual app (url/app)
-@app.route('/app')
+@app.route("/app")
 def about():
-    return render_template('chat.html')
+    return render_template("chat.html")
 
-# OpenAI API call handling. Send a POST request to /chat with a JSON payload containing the user's message.
-@app.route('/chat', methods=['POST'])
+@app.route("/under-construction")
+def under_construction():
+    return render_template("under-construction.html")
+
+# OpenAI API call handling. Send a POST request to /chat with a JSON payload containing the user"s message.
+@app.route("/chat", methods=["POST"])
 def chat():
     messages = request.json.get("messages", []) 
     model = request.json.get("model", "gpt-4.1-mini")
@@ -48,18 +52,18 @@ def chat():
 
     reply = response.output_text
     print(response)
-    return jsonify({'reply': reply})
+    return jsonify({"reply": reply})
 
 # Handle file uploads. Send a POST request to /upload with a JSON payload containing the file.
 # The file will first be uploaded to your OpenAI account, then assigned to the vector store.
-@app.route('/upload', methods=['POST'])
+@app.route("/upload", methods=["POST"])
 def upload_file():
-    if 'file' not in request.files:
-        return jsonify({'message': 'No file part'}), 400
+    if "file" not in request.files:
+        return jsonify({"message": "No file part"}), 400
 
-    file = request.files['file']
-    if file.filename == '':
-        return jsonify({'message': 'No selected file'}), 400
+    file = request.files["file"]
+    if file.filename == "":
+        return jsonify({"message": "No selected file"}), 400
     
     fileupload = client.files.create(
         file=(file.filename, file.stream),
@@ -71,13 +75,13 @@ def upload_file():
         file_id=fileupload.id
     )
 
-    return jsonify({'message': f'Uploaded: {file.filename}'})
+    return jsonify({"message": f"Uploaded: {file.filename}"})
 
-# @app.route('/getfiles', methods=['GET'])
+# @app.route("/getfiles", methods=["GET"])
 # def get_files():
 #     files = client.vector_stores.files.list(vector_store_id="vs_6875a8264e04819181f92591e60c1054")
-#     return jsonify({'filelist': files})
+#     return jsonify({"filelist": files})
 
 # When running the app with this script. Do not use this for production.
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)

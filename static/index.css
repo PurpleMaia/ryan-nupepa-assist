@@ -122,16 +122,14 @@ section {
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    font-size: 18px;
+    list-style-position: inside;
 }
 
 section h3 {
     font-size: 32px;
     margin-bottom: 20px;
     color: var(--color-primary);
-}
-
-section p {
-    font-size: 18px;
 }
 
 footer {
