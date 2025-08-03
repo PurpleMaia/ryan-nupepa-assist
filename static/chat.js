@@ -68,6 +68,8 @@ function clearChat() {
     appendMessage("bot", "Hi! How can I help you today?");
 }
 
+// !! BEGIN CHATGPT GENERATED FUNCTIONS
+
 
 function addFile() {
     const input = document.createElement("input");
@@ -97,14 +99,39 @@ function addFile() {
     input.click();
 }
 
-// !! BEGIN CHATGPT GENERATED FUNCTIONS
+// !! END CHATGPT GENERATED FUNCTIONS
+
+let chatfileinput = null
+
+function addFileToChat() {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "*/*";
+
+    input.onchange = async () => {
+        chatfileinput = input.files[0];
+        alert("File successfully uploaded to chat. Will be included in chat in the next message.");
+    }
+
+    input.click();
+}
+
 function toggleSettings() {
     const panel = document.getElementById("settingsPanel");
-    panel.style.display = panel.style.display === "none" ? "flex" : "none";
+    if (panel.style.display === "none") {
+    panel.style.display = "flex";
+    } 
+    else {
+    panel.style.display = "none";
+}
 }
   
 function exportPDF() {
     const doc = new jsPDF();
     doc.save("conversation.pdf");
 }
-// !! END CHATGPT GENERATED FUNCTIONS
+
+function toggleSidebar() {
+        document.getElementById("sidebar").classList.toggle('active');
+        document.getElementById("menu-toggle").classList.toggle('active');
+    }
