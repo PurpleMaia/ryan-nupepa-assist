@@ -20,6 +20,9 @@ body {
     display: flex;
     flex-direction: column;
     border-right: 3px solid var(--color-primary);
+    z-index: 100;
+    transition: transform 0.15s ease;
+
 }
 
 .sidebar h2 {
@@ -37,6 +40,8 @@ body {
     border-radius: 5px;
     cursor: pointer;
 }
+
+.sidebar button a {text-decoration: none;color:white;}
 
 .sidebar button:hover {
     background: #28B463;
@@ -120,18 +125,25 @@ body {
 
 .chat-input {
     display: flex;
+    gap:10px;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    background: white;
 }
 
 .chat-input textarea {
     flex: 1;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    font-size: 1em;
+    border: none;
+    outline: none;
     resize: none;
 }
 
 .chat-input button {
-    padding: 10px 20px;
+    padding: 10px 15px;
     margin-left: 10px;
     background: var(--color-primary);
     color: white;
@@ -191,6 +203,7 @@ body {
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     gap: 10px;
+    z-index: 1100;
 }
 
 #settingsPanel input[type="number"] {
@@ -205,4 +218,50 @@ body {
     border-radius: 5px;
     border: 1px solid #ccc;
     background: transparent;
+}
+
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 0px;
+    z-index: 1000;
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    font-size: 24px;
+    padding: 20px 4px;
+    border-radius: 0px 5px 5px 0px;
+    transition: transform 0.15s ease;
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .menu-toggle.active {
+        transform: translateX(250px)
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+        height: 100vh;
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    button, a {
+        -webkit-tap-highlight-color: transparent; /* For iOS and Android */
+        outline: none; /* Removes focus outline */
+    }
+
+    body {
+        height: 100%;
+        height: 100vh;
+        height: 100dvh;
+    }
 }

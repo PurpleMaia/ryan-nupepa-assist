@@ -26,18 +26,14 @@
 <body>
 
     <!-- Sidebar with settings and buttons -->
-    <div class="sidebar">
+    <button class="menu-toggle" id="menu-toggle" onclick="toggleSidebar()">&#9776;</button>
+    <div class="sidebar" id="sidebar">
         <h2>Kumu<a class="gradientText">Computer</a></h2>
         <button onclick="clearChat()">New Chat</button>
-        <button onclick="addFile()">Add File</button>
+        <button onclick="addFile()">Add File to Vector Store</button>
         <button onclick="toggleSettings()">LLM Settings</button>
-        <button onclick="exportPDF()">Export Chat as PDF</button>
-        To do:
-        <ol class="todo">
-            <li>Fix pdf</li>
-            <li>Proper file browsing system</li>
-            <li>Add option to add multiple files at once</li>
-        </ol>
+        <!-- <button onclick="exportPDF()" disabled>Export Chat as PDF</button> -->
+        <a href="/feedback" target="_blank">Provide feedback</a>
     </div>
 
     <!-- Main chat interface. Check JS file for more details on workings. -->
@@ -48,33 +44,13 @@
         </div>
         <div class="chat-input">
             <textarea id="userInput" rows="2" placeholder="Send a message..."></textarea>
+            <a onclick="startVoiceInput()" style="cursor:not-allowed"><img src="../static/images/mic.svg" align="center" width="25px"></a>
+            <a onclick="addFileToChat()" style="cursor:not-allowed"><img src="../static/images/file.svg" align="center" width="25px"></a>
             <button id="sendButton" onclick="sendMessage()">
-                <img id="sendIcon" src="../static/images/send.svg" width="20px" style="-webkit-filter: invert(100%)">
-                <img id="waitIcon" src="../static/images/wait.svg" width="20px" style="-webkit-filter: invert(100%); display: none">
+                <img id="sendIcon" src="../static/images/send.svg" align="center" width="20px" style="-webkit-filter: invert(100%)">
+                <img id="waitIcon" src="../static/images/wait.svg" align="center" width="20px" style="-webkit-filter: invert(100%); display: none">
             </button>
         </div>
-    </div>
-    
-    <!-- Popup settings menu -->
-    <div class="popup" id="settingsPopup">
-        <h1>Sources</h1><br>
-        <p>Vector store referenced: <b>vs_6875a8264e04819181f92591e60c1054</b></p><br>
-        <h3>Files referenced:</h3>
-        <ul>
-            <li>khha_19270621.pdf (4.1mB) :: Similarity: 0.94</li>
-            <li>khh_18610501.pdf (4.0mB) :: Similarity: 0.73</li>
-        </ul><br>
-        <h3>Parameters:</h3>
-        <ul>
-            <li>Model: gpt-4.1-mini</li>
-            <li>Temperature: 0.7</li>
-            <li>Max Tokens: 4096</li>
-        </ul><br>
-        <input type="checkbox" checked> Include citations in footer? <br>
-        <button class="button">Get PDF summary</button>
-        <button class="button">Delete current chat</button>
-
-        <button class="roundbutton" onclick="toggleSettings()"><b>X</b> Return to chat</button>
     </div>
 
     <div id="settingsPanel" style="display: none;">
@@ -94,12 +70,12 @@
         </label>
         <label>
             Temperature:
-            <input type="number" id="temperature" min="0" max="2" value="0.7" />
+            <input type="number" id="temperature" min="0" max="2" value="0.7" style="font-size:16px;width:60px;" />
         </label>
 
         <label>
             Max Tokens:
-            <input type="number" id="maxTokens" min="10" max="32768" value="4096" />
+            <input type="number" id="maxTokens" min="10" max="32768" value="4096" style="font-size:16px"/>
         </label>
         <button class="button" onclick="toggleSettings()">Save Settings</button>
     </div>
