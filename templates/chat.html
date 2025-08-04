@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KumuComputer App</title>
 
     <!-- CSS for chat and common CSS file. -->
-    <link rel="stylesheet" href="../static/common.css">
-    <link rel="stylesheet" href="../static/chat.css">
+    <link rel="stylesheet" href="../static/common.css" />
+    <link rel="stylesheet" href="../static/chat.css" />
 
     <!-- "Marked" for markdown rendering in chat. OpenAI often uses markdown in responses. -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    
+
     <!-- DOMPurify to santize user inputs. -->
     <script type="text/javascript" src="/static/purify.min.js"></script>
 
@@ -19,68 +19,101 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <!-- Roboto -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-</head>
-<body>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <!-- Sidebar with settings and buttons -->
-    <button class="menu-toggle" id="menu-toggle" onclick="toggleSidebar()">&#9776;</button>
+    <button class="menu-toggle" id="menu-toggle" onclick="toggleSidebar()">
+      &#9776;
+    </button>
     <div class="sidebar" id="sidebar">
-        <h2>Kumu<a class="gradientText">Computer</a></h2>
-        <button onclick="clearChat()">New Chat</button>
-        <button onclick="addFile()">Add File to Vector Store</button>
-        <button onclick="toggleSettings()">LLM Settings</button>
-        <!-- <button onclick="exportPDF()" disabled>Export Chat as PDF</button> -->
-        <a href="/feedback" target="_blank">Provide feedback</a>
+      <h2>Kumu<a class="gradientText">Computer</a></h2>
+      <button onclick="clearChat()">New Chat</button>
+      <button onclick="addFile()">Add File to Vector Store</button>
+      <button onclick="toggleSettings()">LLM Settings</button>
+      <!-- <button onclick="exportPDF()" disabled>Export Chat as PDF</button> -->
+      <a href="/feedback" target="_blank">Provide feedback</a>
     </div>
 
     <!-- Main chat interface. Check JS file for more details on workings. -->
     <div class="chat-container">
-        <div class="chat-box" id="chatBox">
-            <!-- Starter bot message --->
-             <div class="chat-message bot">Hi! How can I help you today?</div>
-        </div>
-        <div class="chat-input">
-            <textarea id="userInput" rows="2" placeholder="Send a message..."></textarea>
-            <a onclick="startVoiceInput()" style="cursor:not-allowed"><img src="../static/images/mic.svg" align="center" width="25px"></a>
-            <a onclick="addFileToChat()" style="cursor:not-allowed"><img src="../static/images/file.svg" align="center" width="25px"></a>
-            <button id="sendButton" onclick="sendMessage()">
-                <img id="sendIcon" src="../static/images/send.svg" align="center" width="20px" style="-webkit-filter: invert(100%)">
-                <img id="waitIcon" src="../static/images/wait.svg" align="center" width="20px" style="-webkit-filter: invert(100%); display: none">
-            </button>
-        </div>
+      <div class="chat-box" id="chatBox">
+        <!-- Starter bot message --->
+        <div class="chat-message bot">Hi! How can I help you today?</div>
+      </div>
+      <div class="chat-input">
+        <textarea
+          id="userInput"
+          rows="2"
+          placeholder="Send a message..."
+        ></textarea>
+        <a onclick="startVoiceInput()" style="cursor: not-allowed"
+          ><img src="../static/images/mic.svg" align="center" width="25px"
+        /></a>
+        <a onclick="addFileToChat()" style="cursor: not-allowed"
+          ><img src="../static/images/file.svg" align="center" width="25px"
+        /></a>
+        <button id="sendButton" onclick="sendMessage()">
+          <img
+            id="sendIcon"
+            src="../static/images/send.svg"
+            align="center"
+            width="20px"
+            style="-webkit-filter: invert(100%)"
+          />
+          <img
+            id="waitIcon"
+            src="../static/images/wait.svg"
+            align="center"
+            width="20px"
+            style="-webkit-filter: invert(100%); display: none"
+          />
+        </button>
+      </div>
     </div>
 
-    <div id="settingsPanel" style="display: none;">
-        <h2>LLM Settings</h2>
-        <label>
-            Model:
-            <select id="llmModel">
-                <option disabled>== Normal Models ==</option>
-                <option value="gpt-4.1">gpt-4.1</option>
-                <option value="gpt-4.1-mini">gpt-4.1-mini</option>
-                <option value="gpt-4.1">gpt-4.1-nano</option>
-                <option disabled>== Reasoning Models ==</option> 
-                <option value="o3">o3</option>
-                <option value="o3-pro">o3-pro</option>
-                <option value="o4-mini">o4-mini</option> 
-            </select>
-        </label>
-        <label>
-            Temperature:
-            <input type="number" id="temperature" min="0" max="2" value="0.7" style="font-size:16px;width:60px;" />
-        </label>
+    <div id="settingsPanel" style="display: none">
+      <h2>LLM Settings</h2>
+      <label>
+        Model:
+        <select id="llmModel">
+          <option disabled>== Normal Models ==</option>
+          <option value="gpt-4.1-nano">gpt-4.1-nano</option>
+          <option value="gpt-4.1-mini">gpt-4.1-mini</option>
+        </select>
+      </label>
+      <label>
+        Temperature:
+        <input
+          type="number"
+          id="temperature"
+          min="0"
+          max="2"
+          value="0.7"
+          style="font-size: 16px; width: 60px"
+        />
+      </label>
 
-        <label>
-            Max Tokens:
-            <input type="number" id="maxTokens" min="10" max="32768" value="4096" style="font-size:16px"/>
-        </label>
-        <button class="button" onclick="toggleSettings()">Save Settings</button>
+      <label>
+        Max Tokens:
+        <input
+          type="number"
+          id="maxTokens"
+          min="10"
+          max="32768"
+          value="4096"
+          style="font-size: 16px"
+        />
+      </label>
+      <button class="button" onclick="toggleSettings()">Save Settings</button>
     </div>
 
     <!-- MAIN SCRIPT -->
     <script src="../static/chat.js"></script>
-</body>
+  </body>
 </html>
