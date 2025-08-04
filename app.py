@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, jsonify, Response, redirect
 from openai import OpenAI
 import os, base64
 
+VECTOR_ID = os.environ.get("VECTOR_ID")
+
 # Initialize Flask App
 app = Flask(__name__)
 
@@ -45,21 +47,21 @@ def chat():
     if not check_auth(auth):
         return authenticate()
     messages = request.json.get("messages", []) 
-    model = request.json.get("model", "gpt-4.1-mini")
+    model = request.json.get("model", "gpt-4.1-nano")
     temperature = float(request.json.get("temperature", 0.7))
     max_tokens = int(request.json.get("max_tokens", 4096))
     print(request.json)
 
-    prompt = open("./backend-secret/testprompt.txt", "r").read()
+    # prompt = open("./backend-secret/testprompt.txt", "r").read()
 
-    # prompt = "You are KumuComputer, a helpful assistant that helps the user to research parts of Hawaiian History. Utilize relevant files to craft a response that satisfies the user's request. IMPORTANT: Be sure to ALWAYS cite the file you pull information from at then end of your message."
+    prompt = "You are KumuComputer, a helpful assistant that helps the user to research parts of Hawaiian History. Utilize relevant files to craft a response that satisfies the user's request. IMPORTANT: Be sure to ALWAYS cite the file you pull information from at then end of your message."
 
     response_parameters = {
         "model": model,
         "max_output_tokens": max_tokens,
         "tools": [{
             "type": "file_search",
-            "vector_store_ids": ["vs_6875a8264e04819181f92591e60c1054"],
+            "vector_store_ids": [VECTOR_ID],
             "max_num_results": 20
         }],
         "input": messages,
@@ -100,7 +102,7 @@ def upload_file():
     )
 
     client.vector_stores.files.create(
-        vector_store_id="vs_6875a8264e04819181f92591e60c1054",
+        vector_store_id=VECTOR_ID,
         file_id=fileupload.id
     )
 
@@ -118,7 +120,7 @@ def feedback():
 
 # @app.route("/getfiles", methods=["GET"])
 # def get_files():
-#     files = client.vector_stores.files.list(vector_store_id="vs_6875a8264e04819181f92591e60c1054")
+#     files = client.vector_stores.files.list(vector_store_id=VECTOR_ID)
 #     return jsonify({"filelist": files})
 
 # When running the app with this script. Do not use this for production.
