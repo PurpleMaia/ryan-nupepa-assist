@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KumuComputer App</title>
+    <title>KiloLens App</title>
 
-    <!-- CSS for chat and common CSS file. -->
+    <!-- Common.css stores the styles that are common to all pages. -->
+    <!-- Chat.css stores the styles specific to this chat page. -->
     <link rel="stylesheet" href="../static/common.css">
     <link rel="stylesheet" href="../static/chat.css">
 
@@ -13,27 +14,25 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     
     <!-- DOMPurify to santize user inputs. -->
-    <script type="text/javascript" src="/static/purify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.6/purify.min.js"></script> 
 
     <!-- jsPDF for PDF export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-    <!-- Roboto -->
+    <!-- Roboto via Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-
     <!-- Sidebar with settings and buttons -->
     <button class="menu-toggle" id="menu-toggle" onclick="toggleSidebar()">&#9776;</button>
     <div class="sidebar" id="sidebar">
-        <h2>Kumu<a class="gradientText">Computer</a></h2>
+        <h2>Kilo<a class="gradientText">Lens</a></h2>
         <button onclick="clearChat()">New Chat</button>
         <button onclick="addFile()">Add File to Vector Store</button>
         <button onclick="toggleSettings()">LLM Settings</button>
         <!-- <button onclick="exportPDF()" disabled>Export Chat as PDF</button> -->
-        <a href="/feedback" target="_blank">Provide feedback</a>
     </div>
 
     <!-- Main chat interface. Check JS file for more details on workings. -->
@@ -41,11 +40,17 @@
         <div class="chat-box" id="chatBox">
             <!-- Starter bot message --->
              <div class="chat-message bot">Hi! How can I help you today?</div>
+            <!-- From here, the chat messages are created via JS and added to the chatBox div. -->
         </div>
+
+        <!-- Contains the chat input box, the media buttons, and send button. -->
         <div class="chat-input">
             <textarea id="userInput" rows="2" placeholder="Send a message..."></textarea>
+
+            <!-- TODO Both voice input and direct file upload have not been implemented yet. -->
             <a onclick="startVoiceInput()" style="cursor:not-allowed"><img src="../static/images/mic.svg" align="center" width="25px"></a>
             <a onclick="addFileToChat()" style="cursor:not-allowed"><img src="../static/images/file.svg" align="center" width="25px"></a>
+            
             <button id="sendButton" onclick="sendMessage()">
                 <img id="sendIcon" src="../static/images/send.svg" align="center" width="20px" style="-webkit-filter: invert(100%)">
                 <img id="waitIcon" src="../static/images/wait.svg" align="center" width="20px" style="-webkit-filter: invert(100%); display: none">
@@ -53,6 +58,7 @@
         </div>
     </div>
 
+    <!-- Settings panel. Hidden by default. Opened when the user clicks the LLM settings button. -->
     <div id="settingsPanel" style="display: none;">
         <h2>LLM Settings</h2>
         <label>
@@ -80,7 +86,7 @@
         <button class="button" onclick="toggleSettings()">Save Settings</button>
     </div>
 
-    <!-- MAIN SCRIPT -->
+    <!-- Main script for chat.html. Contains the JS functions for the chat including interactions with the backend. -->
     <script src="../static/chat.js"></script>
 </body>
 </html>

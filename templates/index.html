@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KumuComputer</title>
+    <title>KiloLens</title>
+
+    <!-- Common.css stores the styles that are common to all pages. -->
+    <!-- Index.css stores the styles specific to this index page. -->
     <link rel="stylesheet" href="../static/common.css">
 	<link rel="stylesheet" href="../static/index.css">
 </head>
 <body>
+    <!-- Header at the top of the page. -->
     <header>
-        <h1><a style="color:#555555">Kumu</a><a class="gradientText">Computer</a></h1> 
+        <h1><a style="color:#555555">Kilo</a><a class="gradientText">Lens</a></h1> 
         <nav>
             <a href="#about">About</a>
             <a href="#features">Features</a>
@@ -17,21 +21,23 @@
         </nav>
     </header>
 
+    <!-- Hero. X-ray image is rendered above the background, but masked by a circle around the cursor. -->
     <div class="xray-wrapper" id="xray-wrapper">
         <div class="hero">
             <h2>Hawaiian Research. <br>Accelerated.</h2>
             <h3>Multilingual. Multimodal. Multitasking.</h3>
             <a href="/app" class="button">Try it now</a>
         </div>
-        <img src="../static/images/cover-xray.png" class="xray-image" id="xray-image">
+        <img src="../static/images/cover-xray.webp" class="xray-image" id="xray-image">
     </div>
 
+    <!-- The sections below the hero. -->
     <section id="about">
         <h3>About</h3>
-        <p>KumuComputer is a research tool that uses AI to help you explore Hawaiian-language materials more easily. It supports text, images, documents, and audio, making it easier to find and understand Hawaiian history and knowledge.</p>
+        <p>KiloLens is a research tool that uses AI to help you explore Hawaiian-language materials more easily. It supports text, images, documents, and audio, making it easier to find and understand Hawaiian history and knowledge.</p>
     </section>
 
-    <section id="whyhawaiian">
+    <section id="whyHawaiian">
         <h3>Why Hawaiian Research?</h3>
         <p>Hawaiian-language sources hold generations of insight, like history, politics, and general worldview. Conducting research with Hawaiian materials helps to preserve culture and deepen our understanding of the world.</p>
     </section>
@@ -50,19 +56,25 @@
 
     <footer>
         &#169; 2025 Ryan Lagon. All rights reserved.
+        <br>All copyrights and ownership of this page shall automatically transfer to Purple Maiʻa upon their decision to assume control.
+        <br>This footer shall be adjusted accordingly when this transfer occurs.
     </footer>
 </body>
 <script>
-// Update mouse position to make effect work.   
-document.addEventListener("mousemove", (e) => {
+// Didn't want to make a seperate js file for this, so added it here.
+// Update mouse position to make effect work.
+document.addEventListener("mousemove", (mouseEvent) => {
     const xray = document.getElementById("xray-image");
     const rectangle = document.getElementById("xray-wrapper").getBoundingClientRect();
 
-    // Calcualate the relative position of the cursor
-    const x = ((e.clientX - rectangle.left) / rectangle.width) * 100;
-    const y = ((e.clientY - rectangle.top) / rectangle.height) * 100;
+    // Calcualate the relative position of the cursor.
+    // e.clientX - rectangle.left gets how far the cursor is from the left edge,
+    // then, divided by rectangle.width, it is now normalized to [0, 1].
+    // multiplied by 100 to get the percentage used for the CSS property. Same is repeated for y.
+    const x = ((mouseEvent.clientX - rectangle.left) / rectangle.width) * 100;
+    const y = ((mouseEvent.clientY - rectangle.top) / rectangle.height) * 100;
 
-    // Set the position of the xray
+    // Set the position of the xray. Position of the mask is set by these two CSS properties.
     xray.style.setProperty("--x", `${x}%`);
     xray.style.setProperty("--y", `${y}%`);
 });
