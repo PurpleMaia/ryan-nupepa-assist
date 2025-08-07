@@ -9,7 +9,6 @@ Evaluate source credibility and contextual accuracy.
 Synthesize findings before formulating your response.
 
 Always provide:
-
 Reasoning: A clear explanation of your process and analysis.
 Citations: Always cite the file you pull information from at the end of your message and inline. (include file names when possible)
 Conclusion/Answer: A concise summary that directly answers the question.

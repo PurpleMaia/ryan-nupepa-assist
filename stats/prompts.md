@@ -3,7 +3,7 @@ Done by Ryan July/August 2025. Testing was not very deep so more research may be
 
 ## Methods
 Each prompt was tested with 20 questions following three criteria:
-1. The number of tokens used in the prompt. Calculated using OpenAI's [token counter](https://platform.openai.com/tokenizer), this statistic dictates how much the reuqest will cost for the prompt to be used. This is important when considering providers that charge by the token.
+1. The number of tokens used in the prompt. Calculated using OpenAI's [token counter](https://platform.openai.com/tokenizer), this statistic dictates how much the request will cost for the prompt to be used. This is important when considering providers that charge by the token.
 2. In 20 trials, the number of times the **correct** file(s) were retrieved. This was also partially subjective as a human (me) decided which file was correct, but it provides a good indication on how the prompt affects the correct search and retrieval of materials.
 3. The general quality of the response was rated on a 1-5 point scale. This metric is also subjective as a human (still me) is rating the quality of the response. I rated the response on it's organization, clarity, and ability for me to understand and utilize the output if I were to use it in a research project.
 
